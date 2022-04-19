@@ -12,6 +12,6 @@ class MetaAsset {
 
   static getAssetPath(String asset) => "assets/images/$asset";
 
-  String get logo => getAssetPath("logo.svg");
-  String get avatarBackground => getAssetPath("avatar_background.svg");
+  String get banner => getAssetPath("banner.png");
+  String get logo => getAssetPath("logo.jpeg");
 }

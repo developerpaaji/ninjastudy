@@ -7,7 +7,7 @@ import 'package:study/blocs/auth.dart';
 import 'package:study/config/app.dart';
 import 'package:study/locator.dart';
 import 'package:study/providers/theme.dart';
-import 'package:study/screens/home.dart';
+import 'package:study/screens/auth_home.dart';
 import 'package:study/services/auth.dart';
 import 'package:study/services/error_handler.dart';
 import 'package:study/utils/meta/asset.dart';
@@ -36,27 +36,21 @@ class MyApp extends StatelessWidget {
         create: (context) => ThemeProvider(
             lightThemeData: appLightTheme, darkThemeData: appDarkTheme),
         builder: (context, child) {
-          return Theme(
-            data: ThemeProvider.of(context).themeData,
-            child: MultiProvider(
-              providers: [
-                // Injecting all metadata on top of app
-
-                Provider<MetaText>(create: (context) => MetaText(context)),
-                Provider<MetaAsset>(create: (context) => MetaAsset(context)),
-                Provider<MetaColor>(create: (context) => MetaColor(context)),
-                // Auth bloc
-                BlocProvider<AuthBloc>(
-                  create: (context) => AuthBloc(locator.get<AuthService>()),
-                )
-              ],
-              child: MaterialApp(
-                title: appName,
-                theme: ThemeData(
-                  primarySwatch: Colors.blue,
-                ),
-                home: const HomeScreen(),
-              ),
+          return MultiProvider(
+            providers: [
+              // Injecting all metadata on top of app
+              Provider<MetaText>(create: (context) => MetaText(context)),
+              Provider<MetaAsset>(create: (context) => MetaAsset(context)),
+              Provider<MetaColor>(create: (context) => MetaColor(context)),
+              // Auth bloc
+              BlocProvider<AuthBloc>(
+                create: (context) => AuthBloc(locator.get<AuthService>()),
+              )
+            ],
+            child: MaterialApp(
+              title: appName,
+              theme: ThemeProvider.of(context).themeData,
+              home: const AuthHomeScreen(),
             ),
           );
         });

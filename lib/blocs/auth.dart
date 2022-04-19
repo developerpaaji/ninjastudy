@@ -4,7 +4,7 @@ import 'package:study/services/auth.dart';
 
 abstract class AuthState {}
 
-class AuthIdleState {}
+class AuthIdleState extends AuthState {}
 
 class AuthSuccessState extends AuthState {
   final User user;
@@ -18,7 +18,7 @@ class AuthLoggedOutState extends AuthState {}
 class AuthBloc extends Cubit<AuthState> {
   final AuthService authService;
 
-  AuthBloc(this.authService) : super(AuthLoggedOutState());
+  AuthBloc(this.authService) : super(AuthIdleState());
 
   Future<void> init() async {
     if (authService.currentUser != null) {

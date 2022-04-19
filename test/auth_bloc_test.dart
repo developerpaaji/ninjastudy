@@ -6,7 +6,12 @@ void main() {
   AuthService authService = AuthService();
 
   AuthBloc authBloc = AuthBloc(authService);
-  test("Auth logged out state initially", () async {
+
+  test("Auth idle  state initially", () async {
+    expect(authBloc.state is AuthIdleState, true);
+  });
+
+  test("Auth logged out state after init", () async {
     await authBloc.init();
     expect(authBloc.state is AuthLoggedOutState, true);
   });
