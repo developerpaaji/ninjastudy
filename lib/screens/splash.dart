@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study/blocs/auth.dart';
-import 'package:study/utils/meta/asset.dart';
+import 'package:study/widgets/app_banner.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = "/";
@@ -37,8 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: FadeTransition(
         opacity: _controller,
         child: Center(
-          child: Image.asset(
-            MetaAsset.of(context).banner,
+          child: AppBanner(
             width: MediaQuery.of(context).size.width * 0.75,
           ),
         ),
