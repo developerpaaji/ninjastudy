@@ -11,7 +11,9 @@ class MetaColor {
     return Provider.of<MetaColor>(context);
   }
 
-  Color get materialAccent => const Color(0xffeeeeee);
+  Color get materialAccent => ThemeProvider.of(context).isLight
+      ? const Color(0xffeeeeee)
+      : Colors.black.withOpacity(0.7);
   Color get fabDisabled => Colors.teal;
   Color get black =>
       ThemeProvider.of(context).isLight ? Colors.black : Colors.white;
