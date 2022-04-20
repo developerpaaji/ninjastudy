@@ -10,31 +10,16 @@ class AuthHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, state) {
-        if (state is AuthSuccessState) {
-          _loggedIn();
-        } else if (state is AuthLoggedOutState) {
-          _loggedOut();
-        }
-      },
+    return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state is AuthIdleState) {
           return const SplashScreen();
         }
         if (state is AuthSuccessState) {
-          return const HomeScreen();
+          return HomeScreen(user: state.user);
         }
         return const SignInScreen();
       },
     );
-  }
-
-  void _loggedIn() {
-    // TODO
-  }
-
-  void _loggedOut() {
-    // TODO
   }
 }
