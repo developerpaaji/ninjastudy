@@ -34,9 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ThemeProvider>(
         create: (context) => ThemeProvider(
-            isInitiallyLight: false,
-            lightThemeData: appLightTheme,
-            darkThemeData: appDarkTheme),
+            lightThemeData: appLightTheme, darkThemeData: appDarkTheme),
         builder: (context, child) {
           return MultiProvider(
             providers: [

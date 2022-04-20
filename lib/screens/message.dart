@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:study/blocs/auth.dart';
-import 'package:study/blocs/message.dart';
+import 'package:study/providers/message.dart';
 import 'package:study/models/conversation.dart';
 import 'package:study/utils/meta/text.dart';
 import 'package:study/widgets/message.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:study/blocs/message.dart';
+import 'package:study/providers/message.dart';
 import 'package:study/models/conversation.dart';
 import 'package:study/models/message.dart';
 import 'package:study/models/user.dart';

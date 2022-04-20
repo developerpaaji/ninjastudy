@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:study/blocs/message.dart';
+import 'package:study/providers/message.dart';
 import 'package:study/models/conversation.dart';
 import 'package:study/models/message.dart';
 import 'package:study/models/response.dart';
