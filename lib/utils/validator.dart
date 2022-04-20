@@ -14,22 +14,14 @@ Validator hasMinLength(int length) {
       (value ?? "").trim().length < length ? "Minimum Length of $length" : null;
 }
 
+Validator get isAlphanumeric {
+  return (value) => RegExp("^[a-zA-Z0-9_]*\$").hasMatch(value!)
+      ? null
+      : "Please enter alpha numeric";
+}
+
 Validator get isRequired =>
     (String? value) => (value?.isNotEmpty ?? false) ? null : "Required";
-
-Validator get isDouble => (String? value) => (value != null && value.isNotEmpty)
-    ? double.tryParse(value) == null
-        ? "Please enter decimal value."
-        : null
-    : null;
-
-Validator get isPositive => (String? value) =>
-    isDouble(value) ??
-    (value != null
-        ? double.parse(value) <= 0
-            ? "Please enter a positive value"
-            : null
-        : null);
 
 const userMinLength = 4;
 const groupDescriptionLength = 10;

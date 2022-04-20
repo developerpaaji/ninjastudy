@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study/blocs/auth.dart';
@@ -31,14 +32,14 @@ class _SignInScreenState extends State<SignInScreen> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Form(
           key: _formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 12),
+              const SizedBox(height: 36),
               Text(
                 MetaText.of(context).getStarted,
                 style: Theme.of(context).textTheme.headline2,
@@ -62,14 +63,16 @@ class _SignInScreenState extends State<SignInScreen> {
                     _username = val;
                   });
                 },
-                validator: (val) => createValidator(val, [hasMinLength(4)]),
+                validator: (val) =>
+                    createValidator(val, [hasMinLength(4), isAlphanumeric]),
               ),
               const SizedBox(height: 24),
               CommonInputField(
                 label: MetaText.of(context).password,
                 obscureText: true,
                 hintText: MetaText.of(context).passwordHint,
-                validator: (val) => createValidator(val, [hasMinLength(4)]),
+                validator: (val) =>
+                    createValidator(val, [hasMinLength(4), isAlphanumeric]),
                 required: true,
                 onChanged: (val) {
                   setState(() {
@@ -82,8 +85,29 @@ class _SignInScreenState extends State<SignInScreen> {
                 text: MetaText.of(context).submit,
                 loading: _loading,
                 onPressed: _login,
-              )
+              ),
+              const SizedBox(height: 12),
             ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: RichText(
+            text: TextSpan(children: [
+              TextSpan(text: MetaText.of(context).bySigningUp),
+              TextSpan(
+                  text: MetaText.of(context).termsOfService,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                  recognizer: TapGestureRecognizer()..onTap = () {}),
+              TextSpan(text: MetaText.of(context).haveRead),
+              TextSpan(
+                  text: MetaText.of(context).privacyPolicy,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                  recognizer: TapGestureRecognizer()..onTap = () {}),
+            ], style: Theme.of(context).textTheme.caption),
+            textAlign: TextAlign.center,
           ),
         ),
       ),
