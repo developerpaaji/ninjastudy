@@ -94,13 +94,14 @@ class _MessageScreenState extends State<MessageScreen> {
                               ),
                             );
                           })),
-                  MessageInputWidget(
-                    canSend: messageProvider.humanCanSend,
-                    onSubmitted: (text) {
-                      messageProvider.addHumanMessage(
-                          text, messageProvider.messages.last);
-                    },
-                  ),
+                  if (!messageProvider.conversationEnded)
+                    MessageInputWidget(
+                      canSend: messageProvider.humanCanSend,
+                      onSubmitted: (text) {
+                        messageProvider.addHumanMessage(
+                            text, messageProvider.messages.last);
+                      },
+                    ),
                 ],
               ),
             ),

@@ -6,8 +6,9 @@ import 'package:study/models/message.dart';
 import 'package:study/models/user.dart';
 import 'package:uuid/uuid.dart';
 
-const conversationEnded = "Thanks, this conversation has ended";
+const conversationEndedMessage = "Thanks, this conversation has ended";
 const pleaseTryAgain = "Please try again";
+const newConversation = "New Conversation";
 
 Map<String, List<Message>> _messagesByConversation = {};
 
@@ -22,21 +23,20 @@ class MessageProvider extends ChangeNotifier {
   late bool _humanCanSend;
   late int _sentenceIndex;
   late bool _isBotTyping = false;
+  late bool _conversationEnded;
 
   MessageProvider({required this.conversation, required this.user}) {
     _sentenceList = (conversation.sentences ?? []).toList();
     assert(_sentenceList.isNotEmpty);
     _sentenceIndex = 0;
     _humanCanSend = true;
+    _conversationEnded = false;
     _init();
   }
 
   void _init() {
     if (_messagesByConversation[conversation.id] != null) {
-      _add(_createMessage().copyWith(
-        isMeta: true,
-        text: "New Conversation",
-      ));
+      _add(_createMessage().copyWith(isMeta: true, text: newConversation));
       notifyListeners();
     }
 
@@ -65,6 +65,9 @@ class MessageProvider extends ChangeNotifier {
   }
 
   Future<void> addHumanMessage(String text, Message replyTo) async {
+    if (_conversationEnded) {
+      throw "Conversation ended";
+    }
     assert(replyTo.isBot == true);
     _add(_createMessage().copyWith(isBot: false, text: text));
     _humanCanSend = false;
@@ -77,8 +80,9 @@ class MessageProvider extends ChangeNotifier {
     bool isCorrect = _isSimilar(text, replyTo.botSuggestion!);
     _sentenceIndex += isCorrect ? 1 : 0;
     if (_sentenceIndex >= _sentenceList.length) {
-      _add(_createMessage().copyWith(isBot: true, text: conversationEnded));
-      _humanCanSend = false;
+      _add(_createMessage()
+          .copyWith(isBot: true, text: conversationEndedMessage));
+      _conversationEnded = true;
       notifyListeners();
       return;
     } else {
@@ -110,4 +114,6 @@ class MessageProvider extends ChangeNotifier {
 
   List<Message> get messages =>
       (_messagesByConversation[conversation.id] ?? []).toList();
+
+  bool get conversationEnded => _conversationEnded;
 }

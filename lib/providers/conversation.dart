@@ -45,7 +45,7 @@ class ConversationProvider extends ChangeNotifier {
     return response;
   }
 
-  Future<void> updateLastMessage(String conversationId, Message message) async {
+  void updateLastMessage(String conversationId, Message message) {
     int index = _conversations
         .indexWhere((conversation) => conversation.id == conversationId);
     if (index < 0) {
