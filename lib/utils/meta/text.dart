@@ -19,4 +19,17 @@ class MetaText {
   String get password => "Password";
   String get passwordHint => "******";
   String get submit => "Submit";
+  String get conversations => "Conversations";
+  String get bySigningUp => "By signing up, You agree to our ";
+  String get haveRead => " and have read and understood our ";
+  String get privacyPolicy => "Privacy Policy.";
+  String get termsOfService => "Terms of Service";
+  String get chat => "Chat";
+  String get cancel => "Cancel";
+  String get listening => 'Listening...';
+  String get startConversation => "Start conversation";
+  String get micPermissionNotGiven => "Mic Permission not given";
+  String get anonymous => "Anonymous";
+  String get startConversationDescription =>
+      "Click on '+' button to start your english training with A.I";
 }

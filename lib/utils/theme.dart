@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 const double _fontSizeSubtitle = 14;
 const double _fontSizeTitle = 16;
-const double _appBarTitleSize = 22;
+const double _appBarTitleSize = 18;
 const double _appBarIconSize = 24;
-const double _appBarElevation = 2;
+const double _appBarElevation = 0.5;
 const double _fontSizeHeadline6 = 18;
+const double _fontSizeHeadline5 = 22;
 const double _fontSizeHeadline2 = 36;
 const double _labelFontSize = 18;
+const double _fontSizeExtraSmall = 14;
 
 const buttonPadding = EdgeInsets.symmetric(vertical: 16, horizontal: 54);
 ThemeData _createTheme(
@@ -57,6 +59,16 @@ ThemeData _createTheme(
         fontWeight: FontWeight.w500,
         fontSize: _fontSizeHeadline6,
       ),
+      headline5: TextStyle(
+        color: titleColor,
+        fontWeight: FontWeight.w700,
+        fontSize: _fontSizeHeadline5,
+      ),
+      caption: TextStyle(
+        color: subtitleColor,
+        fontSize: _fontSizeExtraSmall,
+      ),
+      bodyText2: TextStyle(color: titleColor),
       headline2: TextStyle(
         color: titleColor,
         fontSize: _fontSizeHeadline2,
@@ -154,6 +166,7 @@ ThemeData get appLightTheme {
     shadowColor: Colors.black.withOpacity(0.1),
     subtitleColor: const Color(0xff6B6B6B),
     labelColor: Colors.black,
+    hintColor: Colors.black38,
     focusedBorderColor: const Color(0xffBEBEBE),
     errorBorderColor: Colors.red,
     buttonBackground: const Color(0xff0D0B22),

@@ -10,8 +10,11 @@ class MetaAsset {
     return Provider.of<MetaAsset>(context, listen: false);
   }
 
-  static getAssetPath(String asset) => "assets/images/$asset";
+  _getImagePath(String asset) => "assets/images/$asset";
+  _getLottiePath(String asset) => "assets/lottie/$asset";
 
-  String get banner => getAssetPath("banner.png");
-  String get logo => getAssetPath("logo.jpeg");
+  String get banner => _getImagePath("banner.png");
+  String get logo => _getImagePath("logo.jpeg");
+  String get lottieAI => _getLottiePath("ai.json");
+  String get lottieTyping => _getLottiePath("typing-status.json");
 }
