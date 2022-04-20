@@ -49,7 +49,7 @@ void main() {
     await messageProvider.addHumanMessage(
         '${conversation.sentences!.last.human}', replyTo);
     Message lastMessage = messageProvider.messages.last;
-    expect(lastMessage.text, conversationEnded);
+    expect(lastMessage.text, conversationEndedMessage);
     expect(messageProvider.humanCanSend, false);
   });
 }

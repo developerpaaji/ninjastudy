@@ -20,8 +20,9 @@ setupLocator() async {
     // Auth Service
     locator.registerSingleton<AuthService>(AuthService());
     // Conversation
-    locator.registerSingleton<ConversationService>(
-        ConversationService(client, errorHandler));
+    ConversationService conversationService =
+        ConversationApiService(client, errorHandler);
+    locator.registerSingleton<ConversationService>(conversationService);
     _isSetup = true;
   }
 }

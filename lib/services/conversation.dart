@@ -7,11 +7,33 @@ import 'package:uuid/uuid.dart';
 
 typedef ConversationResponse = ApiResponse<Conversation>;
 
-class ConversationService extends BaseService {
+abstract class ConversationService extends BaseService {
+  ConversationService([ErrorHandler? errorHandler]) : super(errorHandler);
+  Future<ConversationResponse> createConversation(ConversationTopic topic);
+}
+
+class ConversationMockService extends ConversationService {
+  @override
+  Future<ConversationResponse> createConversation(
+      ConversationTopic topic) async {
+    return ApiResponse(
+        data: Conversation(
+            id: "1",
+            topic: topic,
+            createdAt: DateTime.now(),
+            sentences: [
+          ConversationSentence(bot: "Hello", human: "How are you"),
+          ConversationSentence(bot: "I am fine", human: "Awesome"),
+        ]));
+  }
+}
+
+class ConversationApiService extends ConversationService {
   final ApiClient client;
-  ConversationService(this.client, ErrorHandler? errorHandler)
+  ConversationApiService(this.client, ErrorHandler? errorHandler)
       : super(errorHandler);
 
+  @override
   Future<ConversationResponse> createConversation(
       ConversationTopic topic) async {
     try {
