@@ -14,6 +14,13 @@ Validator hasMinLength(int length) {
       (value ?? "").trim().length < length ? "Minimum Length of $length" : null;
 }
 
+Validator get isStrongPassword {
+  return (String? value) => RegExp("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}\$")
+          .hasMatch(value!)
+      ? null
+      : "Please enter minimum 8 characters, at least one letter and one number.";
+}
+
 Validator get isAlphanumeric {
   return (value) => RegExp("^[a-zA-Z0-9_]*\$").hasMatch(value!)
       ? null

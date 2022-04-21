@@ -58,6 +58,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 hintText: MetaText.of(context).usernameHint,
                 textInputAction: TextInputAction.next,
                 required: true,
+                textCapitalization: TextCapitalization.none,
                 onChanged: (val) {
                   setState(() {
                     _username = val;
@@ -72,7 +73,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 obscureText: true,
                 hintText: MetaText.of(context).passwordHint,
                 validator: (val) =>
-                    createValidator(val, [hasMinLength(4), isAlphanumeric]),
+                    createValidator(val, [hasMinLength(4), isStrongPassword]),
                 required: true,
                 onChanged: (val) {
                   setState(() {
@@ -82,7 +83,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               const SizedBox(height: 45),
               AppButton(
-                text: MetaText.of(context).submit,
+                text: MetaText.of(context).signin,
                 loading: _loading,
                 onPressed: _login,
               ),

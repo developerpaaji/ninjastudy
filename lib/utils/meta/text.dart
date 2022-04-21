@@ -18,7 +18,7 @@ class MetaText {
   String get usernameHint => "singhbhavneet";
   String get password => "Password";
   String get passwordHint => "******";
-  String get submit => "Submit";
+  String get signin => "Signin";
   String get conversations => "Conversations";
   String get bySigningUp => "By signing up, You agree to our ";
   String get haveRead => " and have read and understood our ";
@@ -32,4 +32,7 @@ class MetaText {
   String get anonymous => "Anonymous";
   String get startConversationDescription =>
       "Click on '+' button to start your english training with A.I";
+  String get agree => "Agree";
+  String get doYouWantToLogout => "Do you want to logout";
+  String get suggestion => "You can say";
 }
