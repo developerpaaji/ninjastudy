@@ -21,8 +21,9 @@ class AuthBloc extends Cubit<AuthState> {
   AuthBloc(this.authService) : super(AuthIdleState());
 
   Future<void> init() async {
-    if (authService.currentUser != null) {
-      emit(AuthSuccessState(authService.currentUser!));
+    final currentUser = await authService.currentUser;
+    if (currentUser != null) {
+      emit(AuthSuccessState(currentUser));
       return;
     } else {
       emit(AuthLoggedOutState());
