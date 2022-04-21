@@ -87,11 +87,11 @@ class MessageProvider extends ChangeNotifier {
       return;
     } else {
       if (!isCorrect) {
-        _add(_createMessage().copyWith(isBot: true, text: pleaseTryAgain));
         _add(_createMessage().copyWith(
-            isBot: true,
-            botSuggestion: replyTo.botSuggestion,
-            text: 'You could have said "${replyTo.botSuggestion}"'));
+          isBot: true,
+          text: pleaseTryAgain,
+          botSuggestion: replyTo.botSuggestion,
+        ));
       } else {
         _add(_createMessage().copyWith(
             isBot: true,
