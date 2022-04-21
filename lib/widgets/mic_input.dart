@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:study/utils/meta/text.dart';
+
+const Duration micTimoutDuration = Duration(seconds: 4);
 
 class MicInputWidget extends StatefulWidget {
   final Function(String text) onStopped;
@@ -21,10 +25,15 @@ class _MicInputWidgetState extends State<MicInputWidget> {
   bool _speechListening = false;
   final SpeechToText _speechToText = SpeechToText();
 
+  late Timer _timer;
+
   @override
   void initState() {
     super.initState();
     _initSpeech();
+    _timer = Timer(micTimoutDuration, () {
+      widget.onCancelled();
+    });
   }
 
   /// This has to happen only once per app
@@ -58,6 +67,7 @@ class _MicInputWidgetState extends State<MicInputWidget> {
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
+    _timer.cancel();
     setState(() {
       _lastWords = result.recognizedWords;
     });
