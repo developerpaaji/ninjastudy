@@ -32,6 +32,7 @@ dependencies:
   speech_to_text: ^5.4.3
   # comparing two strings for similarity
   string_similarity: ^2.0.0
+  permission_handler: ^9.2.0
 
 dev_dependencies:
   flutter_test:

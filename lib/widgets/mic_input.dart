@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:study/utils/meta/text.dart';
@@ -28,7 +29,7 @@ class _MicInputWidgetState extends State<MicInputWidget> {
 
   /// This has to happen only once per app
   void _initSpeech() async {
-    bool hasPermission = await _speechToText.hasPermission;
+    bool hasPermission = await _requestPermission();
     if (!hasPermission) {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(MetaText.of(context).micPermissionNotGiven)));
@@ -109,6 +110,12 @@ class _MicInputWidgetState extends State<MicInputWidget> {
         ],
       ),
     );
+  }
+
+  Future<bool> _requestPermission() async {
+    final status = await Permission.microphone.request();
+    return status == PermissionStatus.granted ||
+        status == PermissionStatus.limited;
   }
 
   @override
