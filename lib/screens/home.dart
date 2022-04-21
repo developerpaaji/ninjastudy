@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:study/blocs/auth.dart';
 import 'package:study/locator.dart';
 import 'package:study/models/conversation.dart';
 import 'package:study/models/user.dart';
 import 'package:study/providers/conversation.dart';
 import 'package:study/screens/message.dart';
 import 'package:study/services/conversation.dart';
+import 'package:study/utils/dialog.dart';
 import 'package:study/utils/meta/asset.dart';
 import 'package:study/utils/meta/text.dart';
 import 'package:study/widgets/conversation_tile.dart';
@@ -49,8 +52,14 @@ class HomeScreen extends StatelessWidget {
                   .titleTextStyle
                   ?.copyWith(fontSize: 22),
               actions: [
-                PersonAvatar(
-                    username: user.username ?? MetaText.of(context).anonymous),
+                GestureDetector(
+                  onTap: () {
+                    _logout(context);
+                  },
+                  child: PersonAvatar(
+                      username:
+                          user.username ?? MetaText.of(context).anonymous),
+                ),
                 const SizedBox(width: 12)
               ],
             ),
@@ -140,5 +149,13 @@ class HomeScreen extends StatelessWidget {
         ),
       );
     });
+  }
+
+  void _logout(BuildContext context) async {
+    bool canLogout = await showConfirmationDialog(
+        context: context, title: MetaText.of(context).doYouWantToLogout);
+    if (canLogout) {
+      BlocProvider.of<AuthBloc>(context).logout();
+    }
   }
 }
