@@ -134,6 +134,7 @@ class CommonInputField extends StatelessWidget {
             decoration: inputDecoration ??
                 InputDecoration(
                     helperText: helperText,
+                    errorMaxLines: 2,
                     contentPadding: contentPadding ??
                         const EdgeInsets.symmetric(horizontal: 0, vertical: 12),
                     prefixIcon: prefix != null
