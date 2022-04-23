@@ -19,7 +19,7 @@ Validator get isStrongPassword {
               "^(?=(.*[a-z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#\$%^&*()\\-__+.]){1,}).{5,}\$")
           .hasMatch(value!)
       ? null
-      : "Please enter minimum 5 characters, at least one letter and one number and one special case .";
+      : "Please enter minimum 5 characters, at least one letter, one number and one special character .";
 }
 
 Validator get isAlphanumeric {
