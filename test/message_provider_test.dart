@@ -27,10 +27,7 @@ void main() {
     final replyTo = messageProvider.messages.last;
     await messageProvider.addHumanMessage("Sup", replyTo);
     Message lastMessage = messageProvider.messages.last;
-    Message secondLastMessage =
-        messageProvider.messages[messageProvider.messages.length - 2];
-    expect(secondLastMessage.text, pleaseTryAgain);
-    expect(lastMessage.text, 'You could have said "${replyTo.botSuggestion}"');
+    expect(lastMessage.text, pleaseTryAgain);
   });
 
   test("If Human enter right response and then they will see next sentence",

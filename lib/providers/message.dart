@@ -20,7 +20,6 @@ class MessageProvider extends ChangeNotifier {
   final Conversation conversation;
   final User user;
   late List<ConversationSentence> _sentenceList;
-  late bool _humanCanSend;
   late int _sentenceIndex;
   late bool _isBotTyping = false;
   late bool _conversationEnded;
@@ -29,21 +28,23 @@ class MessageProvider extends ChangeNotifier {
     _sentenceList = (conversation.sentences ?? []).toList();
     assert(_sentenceList.isNotEmpty);
     _sentenceIndex = 0;
-    _humanCanSend = true;
     _conversationEnded = false;
     _init();
   }
 
   void _init() {
-    if (_messagesByConversation[conversation.id] != null) {
-      _add(_createMessage().copyWith(isMeta: true, text: newConversation));
-      notifyListeners();
+    if (messages.isEmpty || (messages.last.isEnd ?? false)) {
+      if (messages.isNotEmpty && (messages.last.isEnd ?? false)) {
+        if (_messagesByConversation[conversation.id] != null) {
+          _add(_createMessage().copyWith(isMeta: true, text: newConversation));
+          notifyListeners();
+        }
+      }
+      _add(_createMessage().copyWith(
+          isBot: true,
+          botSuggestion: _sentenceList[_sentenceIndex].human,
+          text: 'Hi ${user.username}'));
     }
-
-    _add(_createMessage().copyWith(
-        isBot: true,
-        botSuggestion: _sentenceList[_sentenceIndex].human,
-        text: 'Hi ${user.username}'));
     notifyListeners();
     return;
   }
@@ -70,7 +71,6 @@ class MessageProvider extends ChangeNotifier {
     }
     assert(replyTo.isBot == true);
     _add(_createMessage().copyWith(isBot: false, text: text));
-    _humanCanSend = false;
     notifyListeners();
     await Future.delayed(const Duration(milliseconds: 200));
     _isBotTyping = true;
@@ -80,8 +80,11 @@ class MessageProvider extends ChangeNotifier {
     bool isCorrect = _isSimilar(text, replyTo.botSuggestion!);
     _sentenceIndex += isCorrect ? 1 : 0;
     if (_sentenceIndex >= _sentenceList.length) {
-      _add(_createMessage()
-          .copyWith(isBot: true, text: conversationEndedMessage));
+      _add(_createMessage().copyWith(
+        isBot: true,
+        text: conversationEndedMessage,
+        isEnd: true,
+      ));
       _conversationEnded = true;
       notifyListeners();
       return;
@@ -98,7 +101,6 @@ class MessageProvider extends ChangeNotifier {
             botSuggestion: _sentenceList[_sentenceIndex].human,
             text: _sentenceList[_sentenceIndex].bot));
       }
-      _humanCanSend = true;
       notifyListeners();
     }
   }
@@ -110,7 +112,9 @@ class MessageProvider extends ChangeNotifier {
 
   bool get isBotTyping => _isBotTyping;
 
-  bool get humanCanSend => _humanCanSend;
+  bool get humanCanSend =>
+      !conversationEnded &&
+      (messages.isNotEmpty ? (messages.last.isBot ?? false) : false);
 
   List<Message> get messages =>
       (_messagesByConversation[conversation.id] ?? []).toList();

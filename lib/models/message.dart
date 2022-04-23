@@ -8,6 +8,7 @@ class Message extends Equatable {
   final DateTime? createdAt;
   final String? botSuggestion;
   final String? conversationId;
+  final bool? isEnd;
 
   const Message({
     required this.id,
@@ -17,6 +18,7 @@ class Message extends Equatable {
     this.createdAt,
     this.botSuggestion,
     this.conversationId,
+    this.isEnd,
   });
 
   Message copyWith(
@@ -26,16 +28,17 @@ class Message extends Equatable {
       DateTime? createdAt,
       String? botSuggestion,
       bool? isBot,
+      bool? isEnd,
       String? conversationId}) {
     return Message(
-      id: id ?? this.id,
-      text: text ?? this.text,
-      botSuggestion: botSuggestion ?? this.botSuggestion,
-      conversationId: conversationId ?? this.conversationId,
-      createdAt: createdAt ?? this.createdAt,
-      isBot: isBot ?? this.isBot,
-      isMeta: isMeta ?? this.isMeta,
-    );
+        id: id ?? this.id,
+        text: text ?? this.text,
+        botSuggestion: botSuggestion ?? this.botSuggestion,
+        conversationId: conversationId ?? this.conversationId,
+        createdAt: createdAt ?? this.createdAt,
+        isBot: isBot ?? this.isBot,
+        isMeta: isMeta ?? this.isMeta,
+        isEnd: isEnd ?? this.isEnd);
   }
 
   @override
