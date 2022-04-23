@@ -68,7 +68,9 @@ class MessageWidget extends StatelessWidget {
               children: [
                 Container(
                     decoration: BoxDecoration(
-                        color: MetaColor.of(context).materialAccent,
+                        color: (message.isBot ?? false)
+                            ? MetaColor.of(context).materialAccent
+                            : MetaColor.of(context).mineMessagBackground,
                         borderRadius: BorderRadius.circular(32)),
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

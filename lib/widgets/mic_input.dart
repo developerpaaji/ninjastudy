@@ -7,7 +7,7 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:study/utils/meta/text.dart';
 
-const Duration micTimoutDuration = Duration(seconds: 4);
+const Duration micTimoutDuration = Duration(seconds: 3);
 
 class MicInputWidget extends StatefulWidget {
   final Function(String text) onStopped;
@@ -23,17 +23,13 @@ class MicInputWidget extends StatefulWidget {
 class _MicInputWidgetState extends State<MicInputWidget> {
   String _lastWords = '';
   bool _speechListening = false;
+  bool _hasFinished = false;
   final SpeechToText _speechToText = SpeechToText();
-
-  late Timer _timer;
 
   @override
   void initState() {
     super.initState();
     _initSpeech();
-    _timer = Timer(micTimoutDuration, () {
-      widget.onCancelled();
-    });
   }
 
   /// This has to happen only once per app
@@ -46,7 +42,16 @@ class _MicInputWidgetState extends State<MicInputWidget> {
     }
 
     if (!_speechToText.isAvailable) {
-      await _speechToText.initialize();
+      debugPrint("Available ${_speechToText.isAvailable}");
+      await _speechToText.initialize(
+        onStatus: (status) {
+          if (status == "done") {
+            if (_speechToText.lastRecognizedWords.isEmpty) {
+              widget.onCancelled();
+            }
+          }
+        },
+      );
     }
     setState(() {});
     _startListening();
@@ -67,7 +72,7 @@ class _MicInputWidgetState extends State<MicInputWidget> {
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
-    _timer.cancel();
+    _hasFinished = result.finalResult;
     setState(() {
       _lastWords = result.recognizedWords;
     });
@@ -84,7 +89,9 @@ class _MicInputWidgetState extends State<MicInputWidget> {
           Container(
             padding: const EdgeInsets.all(16),
             child: Text(
-              MetaText.of(context).listening,
+              _hasFinished
+                  ? MetaText.of(context).send
+                  : MetaText.of(context).listening,
               style: const TextStyle(fontSize: 20.0),
               textAlign: TextAlign.center,
             ),

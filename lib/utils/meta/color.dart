@@ -14,6 +14,7 @@ class MetaColor {
   Color get materialAccent => ThemeProvider.of(context).isLight
       ? const Color(0xffeeeeee)
       : Colors.black.withOpacity(0.7);
+  Color get mineMessagBackground => Colors.blue.shade50;
   Color get fabDisabled => Colors.teal;
   Color get black =>
       ThemeProvider.of(context).isLight ? Colors.black : Colors.white;

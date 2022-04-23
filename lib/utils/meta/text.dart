@@ -35,4 +35,5 @@ class MetaText {
   String get agree => "Agree";
   String get doYouWantToLogout => "Do you want to logout";
   String get suggestion => "You can say";
+  String get send => "Send";
 }
