@@ -15,10 +15,11 @@ Validator hasMinLength(int length) {
 }
 
 Validator get isStrongPassword {
-  return (String? value) => RegExp("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}\$")
+  return (String? value) => RegExp(
+              "^(?=(.*[a-z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#\$%^&*()\\-__+.]){1,}).{5,}\$")
           .hasMatch(value!)
       ? null
-      : "Please enter minimum 8 characters, at least one letter and one number.";
+      : "Please enter minimum 5 characters, at least one letter and one number and one special case .";
 }
 
 Validator get isAlphanumeric {
